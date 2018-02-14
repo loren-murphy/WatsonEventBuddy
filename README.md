@@ -37,7 +37,7 @@ When the reader has completed this journey, they will understand how to:
 
 Clone the 'WatsonEventBuddy' locally. In a terminal, run:
 
-`$ git clone https://github.com/loren-murphy/WatsonEventBuddy`
+`$ git clone https://github.com/loren-murphy/WatsonEventBuddy.git`
 
 We’ll be using the files within the [`docs`](docs) folder.
 * EventBuddy-NodeRedFlow.json
@@ -50,21 +50,31 @@ Create the following services:
   * [**Node-RED Starter**](https://console.bluemix.net/catalog/starters/node-red-starter)
   * [**Watson Conversation**](https://console.ng.bluemix.net/catalog/services/conversation)
   * [**Watson Text to Speech**](https://console.ng.bluemix.net/catalog/services/text-to-speech/)
+  * [**Apache Spark**](https://console.bluemix.net/catalog/services/apache-spark)
+
+
 
 ## 3. Create Machine Learning Model
 
-Create or login to [Data Science Experience](https://datascience.ibm.com/) account
+Login to [Data Science Experience](https://datascience.ibm.com/). If you do not have an account, you will need to create one.
 
-Create a **new project** called **"Event Buddy"**. If not already done, provision an Object Storage and Spark service. ![](images/ML-Service/NewProject.png)
+Create a **new project** called **"Event Buddy"**. If not already done, provision an Object Storage and Spark service.
 
-Click the **Assets** tab, and beside **Models** section, click **New Model**![](images/ML-Service/NewModel.png)
+![](images/ML-Service/NewProject.png)
 
-Name the model **"Event Buddy ML"**. Select the Spark Service, Machine Learning Service and model type as **Manual**. When done, select **Create**
+Click the **Assets** tab, and beside the **Models** section, click **New Model**
+
+![](images/ML-Service/NewModel.png)
+
+Name the model **"Event Buddy ML"**. Select the Spark Service, Machine Learning Service and model type as **Manual**. When done, select **Create.**
+
 ![](images/ML-Service/NameMLModel.png)
 
- If you do not have a Machine Learning Service Instance associated with the project, **provision an Instance**.![](images/ML-Service/ML Service.png)
+ If you do not have a Machine Learning or Spark Service Instance associated with the project, **provision an Instance**.
 
-Now we need to upload the dataset to create the Machine Learning model. Select **Add Data Assets** and upload the [`Ticket_Data.csv`](docs/Ticket_Data.csv) file. When done, select **Next** ![](images/ML-Service/LoadData.png)
+ ![](images/ML-Service/ML Service.png)
+
+Now we need to upload the dataset to create the Machine Learning model. Select **Add Data Assets** and upload the [`Ticket_Data.csv`](docs/Ticket_Data.csv) file. When done, select **Next**. ![](images/ML-Service/LoadData.png)
 
 Select **Segment (String)** as the column value to predict.Feature columns is **All (default)**. Select **Multiclass Classification** as the technique. ![](images/ML-Service/TrainDataSets.png)
 
@@ -72,7 +82,7 @@ In the upper right corner, select **Add Estimators** and choose all 3 Estimators
 
 Once the technique and estimators have been selected, click **Next** to start training the model.![](images/ML-Service/Train.png)
 
-Watson will start training your model based upon the suggested technique and estimators. Once complete, **Select** and **Save** the model which performed best.![](images/ML-Service/TrainedData.png)
+Watson will start training your model based upon the selected technique and estimators. Once complete, **Select** and **Save** the model which performed best.
 
 Upon completion, you will be taken to the **"Overview"** page where you can see information about the model and dataset.![](images/ML-Service/ModelOverview.png)
 
@@ -86,10 +96,12 @@ Click on the deployment, and select the **Implementation** tab. Copy & save the 
 
 ## 4. Configure Watson Conversation
 
-Launch the **Watson Conversation** tool. Use the **import** icon button the right
+Launch the **Watson Conversation** service. Use the **import** icon button the right
 ![](images/WCS/WCS-upload.png)
 
 Find the local version of [`workspace-wcs-eventbuddy.json`](docs/workspace-wcs-eventbuddy.json) and select **Import**.
+
+![](images/WCS/ImportWorkspace.png)
 
 Upon successful import, you will see the pre-build Intents, Entities, and Dialog. ![](images/WCS/WCS-Intent.png)
 
@@ -97,11 +109,11 @@ Select **Back to Workspaces** to return to the homepage.
 
 ![](images/WCS/WCS-workspaces.png)
 
-Within the "Ticketmaster3" tile, select **View Details**
+Within the **Ticketmaster3** tile, select **View Details**
 
 ![](images/WCS/WCS-ViewDetails.png)
 
-Save the **workspace ID** for later use.
+Save the **workspace ID** for later use. Your ID will be different.
 
 ![](images/WCS/workspaceID.png)
 
@@ -110,9 +122,9 @@ One of the main functions of `Watson Event Buddy` is to search Ticketmaster for 
 
 Under your user settings, select **My Apps**
 
- ![](images/Ticketmaster/MyApps.png)
+ ![](images/Ticketmaster/MyApp.png)
 
-There you will your **Consumer Key**. Copy and Save the key, as you will need it later.
+There you will find your **Consumer Key**. **Copy** and **Save** the key, as you will need it later.
 
  ![](images/Ticketmaster/TicketmasterKey.png)
 
@@ -120,29 +132,28 @@ There you will your **Consumer Key**. Copy and Save the key, as you will need it
 ## 6. Register for Twilio Service
 One of the main functions of `Watson Event Buddy` is to text the link to purchase tickets to the user. To send SMS text messages, we use the Twilio service. Register for a free trial account at [https://www.twilio.com/try-twilio](https://www.twilio.com/try-twilio).
 
-As part of the service, you will be assigned the following values, which you will need to save, they are accessible through your user account settings:
+As part of the service, you will be assigned the following values, which you will need to **save**. They are accessible through your user account settings:
 - Account SID
 - Authentication Token
 
 ![](images/Twilio/twilio.png)
 
 Lastly, you will need a Twilio supplied phone number, where all texts will originate from. To create one, navigate to the *Programmable SMS* option
-in the context menu.
+in the context menu. **Save** this number as you will need it later.
 
 ![](images/Twilio/number.png)
 
-- Twilio supplied phone number
 
 By default, you will only be able to send SMS text messages to the phone
 number you provided to create your account. To send messages to other
-numbers, you need to add them at [https://www.twilio.com/console](https://www.twilio.com/).
+numbers, you need to add them at [https://www.twilio.com/console/phone-numbers/verified](https://www.twilio.com/console/phone-numbers/verified).
 For each number you enter, the user of the number will be asked to verify
 and then be sent a verification code. You will then need to enter this
 verification code to complete the registration process.
 
 ## 7. Enable Node-RED Service
 
-Launch [NodeRED Starter](https://console.bluemix.net/catalog/starters/node-red-starter)
+Launch your previously provisioned [NodeRED Starter](https://console.bluemix.net/catalog/starters/node-red-starter)
 
 Under Connections, **Create Connection** to the previous provisioned services: *Text to Speech*, *Watson Conversation*, *Machine Learning*
 
@@ -152,7 +163,7 @@ Under Connections, **Create Connection** to the previous provisioned services: *
 
 
 
-You connection list should look like the following. If asked to restage, select OK.
+You connection list should look like the following. If asked to restage, select **Restage**.
 ![](images/NodeRed/ConnectedServices.png)
 
 Click **Visit App URL** to launch the nodeRED editor. Select a username and password to secure the editor
@@ -221,11 +232,17 @@ Double click **Set headers for TicketMaster** node. Replace the variable `apikey
    <img width="300" height="100" src="images/NodeRed/TwilioNode.png">
  </p>
 
-Enter your **Account SID** and **From Phone Number**. You saved these values in Step 6: Register for Twilio Service. Click **Add**
+Enter your **Account SID**, **From Phone Number** and **Authentication Token**. You saved these values in Step 6: Register for Twilio Service. Make sure to add the country code before the phone number. If it is a US number, 1 is the country code. Click **Add**
 
 
 <p align="center">
   <img width="300" height="200" src="images/NodeRed/Add_Twilio_Account.png">
+</p>
+
+Upon completion, your node will look like the following. Note "SMS to" field is left empty. Click **Done**.
+
+<p align="center">
+  <img width="300" height="200" src="images/Twilio/Twilio Node Done.png">
 </p>
 
 
@@ -238,7 +255,7 @@ Your nodeRED Flow is Complete! Click **Deploy** to deploy your flow.
 
 ## 8. Deploy Front-End Application
 
-The next step is to create a sample application that connects to your NodeRed flow. When you click on the button below, you will be taken to bluemix DevOps page. This will automatically create a new application for you, via the DevOps ToolChain. If you are not logged on to BlueMix you will need to logon.
+The next step is to create a sample application that connects to your NodeRed flow. When you click on the button below, you will be taken to bluemix DevOps page. This will automatically create a new application for you, via the DevOps ToolChain. If you are not logged on to BlueMix you will need to logon. Note: This application does not work for Bluemix Lite Accounts due to memory constraints.
 
 [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/loren-murphy/WCS-Event-Client.git)
 
