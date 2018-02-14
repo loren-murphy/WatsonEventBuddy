@@ -308,7 +308,7 @@ This will take you to the newly created applications. Click on the **Runtime** l
 
 
 In the CONVERSATION_URL value, change to `https://xxxxxx.mybluemix.net/api/message`, where
-"xxxxxx" is the hostname of your NodeRed application. This comes from the NodeRed url where you created your NodeRed flow. Do not include "/red/#. Also changeYour values will be different.
+"xxxxxx" is the hostname of your NodeRed application. This comes from the NodeRed url where you created your NodeRed flow. Do not include "/red/#. Your values will be different.
 
 <p align="center">
   <img width="500" height="100" src="images/frontend/ConvoURL.png">
