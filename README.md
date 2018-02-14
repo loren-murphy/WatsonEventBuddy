@@ -26,12 +26,12 @@ When the reader has completed this journey, they will understand how to:
 # Steps
 1. [Clone the repo](#1-clone-the-repo)
 2. [Create the Bluemix Services](#2-create-bluemix-services)
-3. [Create Machine Learning Model](#3-create-machine-learning-Model)
+3. [Create Machine Learning Model](#3-create-machine-learning-model)
 4. [Configure Watson Conversation](#4-configure-watson-conversation)
-5. [Register for Ticketmaster Service](#5-Register-for-ticketmaster-service)
+5. [Register for Ticketmaster Service](#5-register-for-ticketmaster-service)
 6. [Register for Twilio Service](#6-register-for-twilio-service)
-7. [Enable and Configure NodeRED Service](#7-Enable-and-Configure-NodeRED-service)
-8. [Deploy Front-End Application](#8-Enable-NodeRED-service)
+7. [Enable and Configure NodeRED Service](#7-enable-and-configure-nodered-service)
+8. [Deploy Client Application](#8-deploy-client-application)
 
 ## 1. Clone the repo
 
@@ -151,7 +151,7 @@ For each number you enter, the user of the number will be asked to verify
 and then be sent a verification code. You will then need to enter this
 verification code to complete the registration process.
 
-## 7. Enable Node-RED Service
+## 7. Enable and Configure NodeRED service
 
 Launch your previously provisioned [NodeRED Starter](https://console.bluemix.net/catalog/starters/node-red-starter)
 
@@ -203,14 +203,26 @@ Input your **Workspace ID**. You saved this ID, in Step 4: Configure Watson Conv
 
 ![](images/NodeRed/WCSID.png)
 
-Next, we need our nodeRED flow to connect to our deployed Machine Learning Model. Double click the **WML-SparkML** node.
-
+Next, we need our nodeRED flow to connect to our deployed Machine Learning Model. First we need to authenticate our ML Service. Double click **WML-Get Auth Key - SparkML** node.
 
 <p align="center">
-  <img width="300" height="100" src="images/NodeRed/ML node.png">
+  <img width="300" height="100" src="images/NodeRed/GetAuthKey.png">
 </p>
 
-Change the **URL** to the scoring end-point url for your deployed model. You saved this url in Step 3: Create Machine Learning Model. Once done, select **Done**
+
+Check **Use basic authentication** and input your **username** and **password** for your Machine Learning Service.
+![](images/NodeRed/BasicAuth.png)
+
+The values can be found in the service credentials section of your Machine Learning service.
+![](images/NodeRed/ML Service Credentials.png)
+
+Next, double click the **WML-SparkML** node.
+
+<p align="center">
+  <img width="300" height="100" src="images/NodeRed/ML Node.png">
+</p>
+
+Change the **URL** to the **scoring end-point url** for your deployed model. You saved this url in Step 3: Create Machine Learning Model. Once done, select **Done**
 
 <p align="center">
   <img width="300" height="300" src="images/NodeRed/MLModel_URL.png">
@@ -253,7 +265,7 @@ Your nodeRED Flow is Complete! Click **Deploy** to deploy your flow.
 </p>
 
 
-## 8. Deploy Front-End Application
+## 8. Deploy Client Application
 
 The next step is to create a sample application that connects to your NodeRed flow. When you click on the button below, you will be taken to bluemix DevOps page. This will automatically create a new application for you, via the DevOps ToolChain. If you are not logged on to BlueMix you will need to logon. Note: This application does not work for Bluemix Lite Accounts due to memory constraints.
 
@@ -285,16 +297,17 @@ This will take you to the newly created applications. Click on the **Runtime** l
 ![](images/frontend/AppRuntime.png)
 
 
-In the CONVERSATION_URL value change the "xxxxxx" to the hostname of your NodeRed application. This comes from the NodeRed url where you created your NodeRed flow. Do not include "/red/#. Your values will be different.
+In the CONVERSATION_URL value, change to `https://xxxxxx.mybluemix.net/api/message`, where
+"xxxxxx" is the hostname of your NodeRed application. This comes from the NodeRed url where you created your NodeRed flow. Do not include "/red/#. Also changeYour values will be different.
 
 <p align="center">
-  <img width="500" height="100" src="images/frontend/ConversationURL.png">
+  <img width="500" height="100" src="images/frontend/ConvoURL.png">
 </p>
 
 
 Click the **Save** button. The application will restart.
 
-Click on the Visit App URL. This is at the top of the page. You will land on the following page.
+Click on the **Visit App URL**. This is at the top of the page. You will land on the following page.
 
 <p align="center">
   <img width="500" height="300" src="images/frontend/ClientWebpage.png">
@@ -306,12 +319,12 @@ Click on the Visit App URL. This is at the top of the page. You will land on the
 Textual version of a sample conversation with Watson Event Buddy:
 
 <p align="center">
-  <img width="400" height="400" src="images/frontend/Convo1.png">
+  <img width="400" height="400" src="images/frontend/WCSOutput1.png">
 </p>
 
 
 <p align="center">
-  <img width="400" height="400" src="images/frontend/Convo2.png">
+  <img width="400" height="400" src="images/frontend/WCSOutput2.png">
 </p>
 
 Here is a recap of the services used to perform this conversation:
