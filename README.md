@@ -78,7 +78,13 @@ Now we need to upload the dataset to create the Machine Learning model. Select *
 
 Select **Segment (String)** as the column value to predict.Feature columns is **All (default)**. Select **Multiclass Classification** as the technique. ![](images/ML-Service/TrainDataSets.png)
 
-In the upper right corner, select **Add Estimators** and choose all 3 Estimators. Click **Add**![](images/ML-Service/Estimators.png)
+In the upper right corner, select **Add Estimators** and choose all 3 Estimators. Click **Add**
+
+<p align="center">
+  <img width="400" height="300" src="images/ML-Service/Estimators.png">
+</p>
+
+
 
 Once the technique and estimators have been selected, click **Next** to start training the model.![](images/ML-Service/Train.png)
 
@@ -211,7 +217,11 @@ Next, we need our nodeRED flow to connect to our deployed Machine Learning Model
 
 
 Check **Use basic authentication** and input your **username** and **password** for your Machine Learning Service.
-![](images/NodeRed/BasicAuth.png)
+
+<p align="center">
+  <img width="400" height="500" src="images/NodeRed/BasicAuth.png">
+</p>
+
 
 The values can be found in the service credentials section of your Machine Learning service.
 ![](images/NodeRed/ML Service Credentials.png)
