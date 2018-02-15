@@ -9,7 +9,7 @@ When the reader has completed this journey, they will understand how to:
 * Use Ticketmaster API to search for events based upon location, type and date
 * Use Twilio to send SMS text messages with link to purchase tickets from Ticketmaster
 
-![](images/architecture.png)
+![](images/WatsonEventBuddyArch.jpg)
 
 ### Included Components
 
